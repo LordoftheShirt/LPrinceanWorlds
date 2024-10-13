@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BowLaserFollowRay : MonoBehaviour
+public class BowLaserFollowRayV2: MonoBehaviour
 {
     // all vector laser variables
     [SerializeField] float lineThickness = 0.25f;
