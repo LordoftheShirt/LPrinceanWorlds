@@ -5,10 +5,10 @@ using Unity.Burst.CompilerServices;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class PrinceanWorldComplex : MonoBehaviour
+public class PrinceanTrueGravity : MonoBehaviour
 {
     [SerializeField] private GameObject gravityVectorObjectPrefabAssign;
-    [SerializeField] private int totalLengthOfArray = 10;
+    private int totalLengthOfArray = 13;
     [SerializeField] private Vector2 startVelocity;
     [SerializeField] private float gravityAmount = 1;
     [SerializeField] private float visualVectorLineThickness = 0.12f;
@@ -36,12 +36,12 @@ public class PrinceanWorldComplex : MonoBehaviour
     {
         if (other.TryGetComponent<Rigidbody2D>(out Rigidbody2D otherRigidBody))
         {
-            for (int i = 0;  i < astralBodyCount.Length; ++i)
+            for (int i = 0; i < astralBodyCount.Length; ++i)
             {
                 if (astralBodyCount[i] == otherRigidBody)
                 {
                     return;
-                } 
+                }
                 else if (astralBodyCount[i] == null)
                 {
                     Debug.Log(i);
@@ -53,7 +53,9 @@ public class PrinceanWorldComplex : MonoBehaviour
         }
     }
     private void OnTriggerStay2D(Collider2D other)
+    
     {
+        
         if (astralBodyCount[0] != null) { if (other.gameObject == astralBodyCount[0].gameObject) GravityCalculation(0); }
         if (astralBodyCount[1] != null) { if (other.gameObject == astralBodyCount[1].gameObject) GravityCalculation(1); }
         if (astralBodyCount[2] != null) { if (other.gameObject == astralBodyCount[2].gameObject) GravityCalculation(2); }
@@ -64,8 +66,14 @@ public class PrinceanWorldComplex : MonoBehaviour
         if (astralBodyCount[7] != null) { if (other.gameObject == astralBodyCount[7].gameObject) GravityCalculation(7); }
         if (astralBodyCount[8] != null) { if (other.gameObject == astralBodyCount[8].gameObject) GravityCalculation(8); }
         if (astralBodyCount[9] != null) { if (other.gameObject == astralBodyCount[9].gameObject) GravityCalculation(9); }
+        if (astralBodyCount[9] != null) { if (other.gameObject == astralBodyCount[9].gameObject) GravityCalculation(9); }
+        if (astralBodyCount[10] != null) { if (other.gameObject == astralBodyCount[10].gameObject) GravityCalculation(10); }
+        if (astralBodyCount[11] != null) { if (other.gameObject == astralBodyCount[11].gameObject) GravityCalculation(11); }
+        if (astralBodyCount[12] != null) { if (other.gameObject == astralBodyCount[12].gameObject) GravityCalculation(12); }
+
 
     }
+    
     private void FixedUpdate()
     {
         /*
@@ -92,20 +100,18 @@ public class PrinceanWorldComplex : MonoBehaviour
             */
         }
     }
-
-    private void OnTriggerExit(Collider other)
-    {
-
-    }
-
     public void GravityCalculation(int rigidBodyArraySlot)
     {
         if (astralBodyCount[rigidBodyArraySlot] != null)
         {
-
             // Creates a vector stretching between its own pivot and pivot of OtherObject.
             gravity[rigidBodyArraySlot] = new Vector2(astralBodyCount[rigidBodyArraySlot].transform.position.x - transform.position.x, astralBodyCount[rigidBodyArraySlot].transform.position.y - transform.position.y);
-            halfMagnitude[rigidBodyArraySlot] = new Vector2((transform.position.x + astralBodyCount[rigidBodyArraySlot].transform.position.x) / 2, (transform.position.y + astralBodyCount[rigidBodyArraySlot].transform.position.y) /2 );
+            halfMagnitude[rigidBodyArraySlot] = new Vector2((transform.position.x + astralBodyCount[rigidBodyArraySlot].transform.position.x) / 2, (transform.position.y + astralBodyCount[rigidBodyArraySlot].transform.position.y) / 2);
+            /*
+            if (astralBodyCount[rigidBodyArraySlot].gameObject.CompareTag("Player"))
+            {
+                astralBodyCount[rigidBodyArraySlot].transform.up = gravity[rigidBodyArraySlot];
+            } */
 
             if (instantiateVector[rigidBodyArraySlot] == true)
             {
@@ -121,11 +127,14 @@ public class PrinceanWorldComplex : MonoBehaviour
                 gravityVectorObject[rigidBodyArraySlot].transform.localScale = new Vector2(visualVectorLineThickness, hypotenusan[rigidBodyArraySlot]);
                 gravityVectorObject[rigidBodyArraySlot].transform.up = gravity[rigidBodyArraySlot];
             }
+
+            // STATEMENT BELOW IS FALSE. DON'T LISTEN. ISSUE: WHEN X/Y BECOMES 0, IT CRASHES. WHEN IT GETS NEAR 0, IT MASSIVE FOR JUST AN INSTANCE IN TIME, LEADING TO WEIRD ZIGZAG BLAST OFFS.
             // Turns the vectors into decimals so that rather than have the gravity increase as otherObject grow farther apart, gravity will decrease.
-            //gravity = new Vector2(1/gravity.x, 1/gravity.y);
+            //gravity[rigidBodyArraySlot] = new Vector2(1f / gravity[rigidBodyArraySlot].x, 1f / gravity[rigidBodyArraySlot].y);
 
             // gravityAmount is negative to make otherObject move in contrary to direction of the vector (otherObject will fall toward the vectors base). 
-            astralBodyCount[rigidBodyArraySlot].AddForce(gravity[rigidBodyArraySlot] * -gravityAmount * myBody.mass);
+            astralBodyCount[rigidBodyArraySlot].AddForce(gravity[rigidBodyArraySlot].normalized * -gravityAmount * myBody.mass / (gravity[rigidBodyArraySlot].normalized.magnitude * gravity[rigidBodyArraySlot].magnitude));
+            Debug.Log(gravityAmount * myBody.mass / (gravity[rigidBodyArraySlot].magnitude));
         }
     }
 }
