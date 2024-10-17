@@ -107,11 +107,11 @@ public class PrinceanTrueGravity : MonoBehaviour
             // Creates a vector stretching between its own pivot and pivot of OtherObject.
             gravity[rigidBodyArraySlot] = new Vector2(astralBodyCount[rigidBodyArraySlot].transform.position.x - transform.position.x, astralBodyCount[rigidBodyArraySlot].transform.position.y - transform.position.y);
             halfMagnitude[rigidBodyArraySlot] = new Vector2((transform.position.x + astralBodyCount[rigidBodyArraySlot].transform.position.x) / 2, (transform.position.y + astralBodyCount[rigidBodyArraySlot].transform.position.y) / 2);
-            /*
+            
             if (astralBodyCount[rigidBodyArraySlot].gameObject.CompareTag("Player"))
             {
                 astralBodyCount[rigidBodyArraySlot].transform.up = gravity[rigidBodyArraySlot];
-            } */
+            } 
 
             if (instantiateVector[rigidBodyArraySlot] == true)
             {

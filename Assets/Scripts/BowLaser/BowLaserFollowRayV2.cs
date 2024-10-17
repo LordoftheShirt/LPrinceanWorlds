@@ -9,7 +9,7 @@ public class BowLaserFollowRayV2: MonoBehaviour
     [SerializeField] private Transform end, start, cursor, bounceTransform;
     [SerializeField] GameObject firstRicochet;
     [SerializeField] private LayerMask bowLaserDetect;
-    public Vector2 lineInSpace, halfMagnitude;
+    public Vector2 lineInSpace, halfMagnitude, bounceVector1;
     private RaycastHit2D secondHit;
 
     // all cursor detection variables.
@@ -47,13 +47,16 @@ public class BowLaserFollowRayV2: MonoBehaviour
     {
         // Calculates the delta line between the two points of interest.
         lineInSpace = new Vector2(cursor.position.x - start.position.x, cursor.position.y - start.position.y);
-        Vector2 bounceVector1 = new Vector2(-lineInSpace.x, lineInSpace.y);
+        
+        // This was not at all even neccesary it appears. Apparently they can calculate reflections for you... the fuck?
+        //Vector2 bounceVector1 = new Vector2(-lineInSpace.x, lineInSpace.y);
 
         // Creates a raycast using the vector above. Infinte length, looking for objects within the "bowLaserDetect" layermask. Teleports a laser pointer circle to the position of collision.
         RaycastHit2D hit = Physics2D.Raycast(start.position, lineInSpace, Mathf.Infinity, bowLaserDetect);
         if (hit.collider != null)
         {
             end.position = hit.point;
+            bounceVector1 = Vector2.Reflect(lineInSpace, hit.normal);
 
             secondHit = Physics2D.Raycast(hit.point, bounceVector1, Mathf.Infinity, bowLaserDetect);
             if (secondHit.collider != null)
