@@ -20,10 +20,10 @@ public class LaserOfMyDreams : MonoBehaviour
     }
     private void Update()
     {
+        ReflectLaser();
     }
     void FixedUpdate()
     {
-        ReflectLaser();
     }
     private void ReflectLaser()
     {
