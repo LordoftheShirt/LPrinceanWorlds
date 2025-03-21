@@ -6,6 +6,7 @@ using UnityEngine;
 public class UIConveyor : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI numberDisplay;
+    public GameObject highlight;
 
     private Transform conveyorEnd;
     private int firstNumber, secondNumber, result;
@@ -31,5 +32,10 @@ public class UIConveyor : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+
+    public int GetResult()
+    {
+        return result;
     }
 }

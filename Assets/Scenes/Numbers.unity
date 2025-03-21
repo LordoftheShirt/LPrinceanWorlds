@@ -977,6 +977,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf6150760e420944a94cedba4dfd0e82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  conveyorMother: {fileID: 2110067240}
+  input: {fileID: 11400000, guid: b54ba3f6d8c58e846a6c40bde81783b7, type: 2}
   numberDisplay: {fileID: 1578220194353107557}
 --- !u!224 &8555118152703879547
 RectTransform:

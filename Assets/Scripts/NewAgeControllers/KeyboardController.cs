@@ -76,6 +76,19 @@ public class KeyboardController : InputController
         return Input.GetKeyDown(KeyCode.Alpha9);
     }
 
+    /* Let's not even have LEFT / RIGHT! WHY HAVE LEFT RIGHT?
+    public override bool RetrieveLeft()
+    {
+        if (Input.GetKey(KeyCode.A)) return true;
 
+        return Input.GetKey(KeyCode.LeftArrow);
+    }
+
+    public override bool RetrieveRight()
+    {
+        if (Input.GetKey(KeyCode.D)) return true;
+
+        return Input.GetKey(KeyCode.RightArrow); 
+    } */
 
 }

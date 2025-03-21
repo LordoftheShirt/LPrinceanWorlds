@@ -7,9 +7,17 @@ using UnityEngine.UI;
 
 public class InputManager : MonoBehaviour
 {
+    [SerializeField] private Transform conveyorMother;
+    private UIConveyor bottomChild;
+    private int boxResult, digitCount, myResult;
+
     [SerializeField] private InputController input = null;
     [SerializeField] private TextMeshProUGUI numberDisplay;
+    [SerializeField] private float stunTime = 3f;
+
     private string inputText;
+    private bool allowInput = true;
+    private float stunCounter;
     void Start()
     {
         inputText = string.Empty;
@@ -19,6 +27,24 @@ public class InputManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        CheckBottomChild();
+
+        if (allowInput) 
+        { 
+            PlayerInput();
+        }
+        else
+        {
+            // STUNS the player, then resets input. Display reset comes directly after.
+            stunCounter = stunCounter - Time.deltaTime;
+            if (stunCounter < 0)
+            {
+                allowInput = true;
+                inputText = string.Empty;
+                print("STUN OVER!");
+
+            }
+        }
 
         MatchDisplay();
     }
@@ -28,6 +54,24 @@ public class InputManager : MonoBehaviour
         if (numberDisplay.text != inputText)
         {
             numberDisplay.text = inputText;
+        }
+
+        if (bottomChild != null && numberDisplay.text.Length >= digitCount)
+        {
+            int.TryParse(inputText, out myResult);
+            if (myResult == boxResult)
+            {
+                Destroy(bottomChild.gameObject);
+                inputText = string.Empty;
+                MatchDisplay();
+                print("KILL!");
+            }
+            else if (allowInput)
+            {
+                stunCounter = stunTime;
+                allowInput = false;
+                print("FAIL!");
+            }
         }
     }
 
@@ -43,5 +87,24 @@ public class InputManager : MonoBehaviour
         if (input.RetrieveNum7Input()) inputText += 7;
         if (input.RetrieveNum8Input()) inputText += 8;
         if (input.RetrieveNum9Input()) inputText += 9;
+
+        //if (input.RetrieveLeft()) print("Left");
+        //if (input.RetrieveRight()) print("Right");
+    }
+
+    private void CheckBottomChild()
+    {
+        if (bottomChild == null && conveyorMother.childCount > 0)
+        {
+            if (conveyorMother.GetChild(0).TryGetComponent<UIConveyor>(out UIConveyor uiConveyor))
+            {
+                bottomChild = uiConveyor;
+                boxResult = bottomChild.GetResult();
+                digitCount = (int)Mathf.Floor(Mathf.Log10(boxResult) + 1);
+                print("DIGIT AMOUNT: " + digitCount);
+                bottomChild.highlight.SetActive(true);
+                bottomChild.gameObject.name = "Selected Box";
+            }
+        }
     }
 }
