@@ -21,14 +21,6 @@ public class AIController : InputController
     public override bool RetrieveNum8Input() { return true; }
     public override bool RetrieveNum9Input() { return true; }
 
-    /*public override bool RetrieveLeft()
-    {
-        return true;
-    }
-
-    public override bool RetrieveRight()
-    {
-        return true;
-    }*/
-
+    public override bool RetrieveBackspace() { return true; }
+    public override bool RetrieveSelectionFreeze() { return true; }
 }

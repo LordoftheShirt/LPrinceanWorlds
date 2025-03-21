@@ -41,6 +41,7 @@ public class InputManager : MonoBehaviour
             {
                 allowInput = true;
                 inputText = string.Empty;
+                numberDisplay.color = Color.white;
                 print("STUN OVER!");
 
             }
@@ -70,6 +71,7 @@ public class InputManager : MonoBehaviour
             {
                 stunCounter = stunTime;
                 allowInput = false;
+                numberDisplay.color = Color.red;
                 print("FAIL!");
             }
         }
@@ -87,6 +89,14 @@ public class InputManager : MonoBehaviour
         if (input.RetrieveNum7Input()) inputText += 7;
         if (input.RetrieveNum8Input()) inputText += 8;
         if (input.RetrieveNum9Input()) inputText += 9;
+        if (input.RetrieveSelectionFreeze()) { }
+        if (input.RetrieveBackspace())
+        {
+            if (inputText.Length > 0)
+            {
+               inputText = inputText.Substring(0, inputText.Length - 1);
+            }
+        } 
 
         //if (input.RetrieveLeft()) print("Left");
         //if (input.RetrieveRight()) print("Right");

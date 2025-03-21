@@ -14,8 +14,7 @@ public abstract class InputController : ScriptableObject
     public abstract bool RetrieveNum7Input();
     public abstract bool RetrieveNum8Input();
     public abstract bool RetrieveNum9Input();
+    public abstract bool RetrieveBackspace();
+    public abstract bool RetrieveSelectionFreeze();
 
-    /*
-    public abstract bool RetrieveLeft();
-    public abstract bool RetrieveRight(); */
 }

@@ -76,19 +76,16 @@ public class KeyboardController : InputController
         return Input.GetKeyDown(KeyCode.Alpha9);
     }
 
-    /* Let's not even have LEFT / RIGHT! WHY HAVE LEFT RIGHT?
-    public override bool RetrieveLeft()
+    public override bool RetrieveBackspace()
     {
-        if (Input.GetKey(KeyCode.A)) return true;
-
-        return Input.GetKey(KeyCode.LeftArrow);
+        // this key works. Sub optimal.
+        return Input.GetKeyDown(KeyCode.Backspace);
     }
 
-    public override bool RetrieveRight()
+    public override bool RetrieveSelectionFreeze()
     {
-        if (Input.GetKey(KeyCode.D)) return true;
-
-        return Input.GetKey(KeyCode.RightArrow); 
-    } */
+        // I think of no appropriate key for this thing.
+        return Input.GetKeyDown(KeyCode.KeypadPlus);
+    }
 
 }
