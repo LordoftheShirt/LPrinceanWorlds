@@ -284,6 +284,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 1
+  maxSpeed: 20
+  cursor: {fileID: 0}
+  cameraSpot: {fileID: 0}
 --- !u!50 &508671818
 Rigidbody2D:
   serializedVersion: 4
