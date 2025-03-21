@@ -432,7 +432,7 @@ GameObject:
   - component: {fileID: 580570100}
   - component: {fileID: 580570099}
   m_Layer: 5
-  m_Name: Background (MIDDLE)
+  m_Name: Background Shadow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
