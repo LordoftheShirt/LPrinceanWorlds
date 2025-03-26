@@ -46,15 +46,18 @@ public class UpFacesCursor : MonoBehaviour
 
     private void CameraMovement()
     {
-        if (!aiming)
+        if (cameraSpot != null)
         {
-            Vector3 zoomOut = new Vector3(transform.position.x, transform.position.y, -20);
-            cameraSpot.position = zoomOut;
-        }
-        else
-        {
-            Vector3 halfMagnitude = new Vector3((cursor.position.x + transform.position.x) / 2, (cursor.position.y + transform.position.y) / 2, -20);
-            cameraSpot.position = halfMagnitude;
+            if (!aiming)
+            {
+                Vector3 zoomOut = new Vector3(transform.position.x, transform.position.y, -20);
+                cameraSpot.position = zoomOut;
+            }
+            else
+            {
+                Vector3 halfMagnitude = new Vector3((cursor.position.x + transform.position.x) / 2, (cursor.position.y + transform.position.y) / 2, -20);
+                cameraSpot.position = halfMagnitude;
+            }
         }
     }
     
